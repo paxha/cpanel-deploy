@@ -48,7 +48,6 @@ const main = async () => {
                         let taskFinished = false;
 
                         while (!taskFinished) {
-                            sleep(1000);
                             taskFinished = isTaskFinished(instance, taskId);
                         }
 
@@ -80,6 +79,8 @@ const main = async () => {
 };
 
 async function isTaskFinished(instance, taskId) {
+    await delay(1000);
+
     let taskFinished = true;
     
     await instance.get('UserTasks/retrieve').then(response => {
