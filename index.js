@@ -102,5 +102,4 @@ async function isTaskFinished(instance, taskId) {
     return taskFinished;
 }
 
-
 main();
