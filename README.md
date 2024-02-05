@@ -24,7 +24,7 @@ jobs:
     steps:
       - name: Deploy to cPanel
         id: deploy
-        uses: paxha/cpanel-deploy@v2.1.0
+        uses: paxha/cpanel-deploy@v3
         with:
           host: 'https://serverxxx.web-hosting.com'
           port: '2083' # Optional. Don't change it unless you know what you're doing

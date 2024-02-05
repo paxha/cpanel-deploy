@@ -45,9 +45,12 @@ const main = async () => {
 
                         while (!taskFinished) {
                             taskFinished = await isTaskFinished(instance, taskId);
-                            console.log(`while taskFinished: ${taskFinished}`);
+                            if (taskFinished) {
+                                core.info(`Deployment for branch ${branch} finished successfully`);
+                            } else {
+                                core.info(`Deployment for branch ${branch} is still in progress`);
+                            }
                         }
-
                     } else {
                         throw new Error(`Deployment for branch ${branch} failed`);
                     }
@@ -67,6 +70,8 @@ const main = async () => {
 
         const duration = new Date() - timeStart;
         core.setOutput("duration", duration);
+
+        core.info('Deployment finished successfully');
     } catch (error) {
         const duration = new Date() - timeStart;
         core.setOutput('duration', duration);
@@ -85,19 +90,15 @@ async function isTaskFinished(instance, taskId) {
             response.data.data.forEach(task => {
                 if (task.id === taskId) {
                     taskFinished = false;
-
-                    console.log(`inside taskFinished: ${taskFinished}`)
                 }
             });
         } else {
-            throw new Error(`Deployment tasks retrieval failed`);
+            throw new Error(`Deployment tasks retrieval failed.`);
         }
     }).catch(error => {
         console.log(error);
         throw new Error(error);
     });
-
-    console.log(`outside taskFinished: ${taskFinished}`)
 
     return taskFinished;
 }
