@@ -33313,7 +33313,6 @@ const main = async () => {
 
         const instance = axios.create({
             baseURL: baseUrl,
-            timeout: 1000,
             headers: { "Authorization": `cpanel ${username}:${apiToken}` }
         });
 
