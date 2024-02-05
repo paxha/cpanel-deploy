@@ -33295,6 +33295,8 @@ var __webpack_exports__ = {};
 const core = __nccwpck_require__(2186);
 const axios = __nccwpck_require__(8757);
 
+core.info('Starting deployment...');
+
 const main = async () => {
     const timeStart = new Date();
     try {
@@ -33361,6 +33363,8 @@ const main = async () => {
         core.setFailed(error.message);
     }
 };
+
+main();
 })();
 
 module.exports = __webpack_exports__;
