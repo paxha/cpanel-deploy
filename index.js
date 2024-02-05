@@ -88,15 +88,19 @@ function isTaskFinished(instance, taskId) {
                 response.data.data.forEach(task => {
                     if (task.id === taskId) {
                         taskFinished = false;
+
+                        console.log(`inside taskFinished: ${taskFinished}`)
                     }
                 });
             } else {
-                throw new Error(`Deployment task ${taskId} failed to retrieve`);
+                throw new Error(`Deployment tasks retrieval failed`);
             }
         }).catch(error => {
             console.log(error);
         });
     }, 3000);
+
+    console.log(`outside taskFinished: ${taskFinished}`)
     
     return taskFinished;
 }
