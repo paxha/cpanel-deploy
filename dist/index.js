@@ -33329,7 +33329,7 @@ const main = async () => {
                     params: {
                         repository_root: remotePath,
                     }
-                }).then(response => {
+                }).then(async (response) => {
                     if (response.data.status === 1) {
                         const taskId = response.data.data.task_id;
 
@@ -33339,11 +33339,6 @@ const main = async () => {
 
                         while (!taskFinished) {
                             taskFinished = isTaskFinished(instance, taskId);
-                            if (taskFinished) {
-                                core.info(`Task ${taskId} status: Completed`);
-                            } else {
-                                core.info(`Task ${taskId} status: In-Progress...`);
-                            }
                         }
 
                     } else {
@@ -33378,7 +33373,7 @@ async function isTaskFinished(instance, taskId) {
 
     await sleep(3000);
 
-    instance.get('UserTasks/retrieve').then(response => {
+    await instance.get('UserTasks/retrieve').then(response => {
         if (response.data.status === 1) {
             response.data.data.forEach(task => {
                 if (task.id === taskId) {
