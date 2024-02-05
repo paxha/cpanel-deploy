@@ -33339,6 +33339,11 @@ const main = async () => {
 
                         while (taskFinished) {
                             taskFinished = isTaskFinished(instance, taskId);
+                            if (taskFinished) {
+                                core.info(`Task ${taskId} status: Completed`);
+                            } else {
+                                core.info(`Task ${taskId} status: In-Progress...`);
+                            }
                         }
 
                     } else {
@@ -33377,7 +33382,6 @@ async function isTaskFinished(instance, taskId) {
         if (response.data.status === 1) {
             response.data.data.forEach(task => {
                 if (task.id === taskId) {
-                    core.info(`Task ${taskId} status: In-Progress...`);
                     taskFinished = false;
                 }
             });
