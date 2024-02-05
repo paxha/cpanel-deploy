@@ -1,6 +1,8 @@
 const core = require('@actions/core');
 const axios = require('axios');
 
+core.info('Starting deployment...');
+
 const main = async () => {
     const timeStart = new Date();
     try {
@@ -67,3 +69,5 @@ const main = async () => {
         core.setFailed(error.message);
     }
 };
+
+main();

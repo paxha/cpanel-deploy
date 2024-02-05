@@ -25,7 +25,7 @@ outputs:
   duration:
     description: "Time it took to deploy, in milliseconds"
 runs:
-  using: "node20"
+  using: "node16"
   main: "dist/index.js"
 branding:
   icon: "upload-cloud"
