@@ -43,8 +43,9 @@ const main = async () => {
 
                         let taskFinished = false;
 
-                        while (taskFinished) {
+                        while (!taskFinished) {
                             taskFinished = isTaskFinished(instance, taskId);
+                            console.log(`while taskFinished: ${taskFinished}`);
                         }
 
                     } else {
