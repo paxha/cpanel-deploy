@@ -82,7 +82,7 @@ async function isTaskFinished(instance, taskId) {
     await delay(1000);
 
     let taskFinished = true;
-    
+
     await instance.get('UserTasks/retrieve').then(response => {
         console.info(`Tasks List: ${JSON.stringify(response.data, null, 2)}`);
 
@@ -100,6 +100,10 @@ async function isTaskFinished(instance, taskId) {
     });
 
     return taskFinished;
+}
+
+function delay(time) {
+    return new Promise(resolve => setTimeout(resolve, time));
 }
 
 main();
