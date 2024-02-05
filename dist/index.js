@@ -33373,30 +33373,37 @@ const main = async () => {
     }
 };
 
-function isTaskFinished(instance, taskId) {
+async function isTaskFinished(instance, taskId) {
     let taskFinished = true;
 
-    setTimeout(function () {
-        instance.get('UserTasks/retrieve').then(response => {
-            if (response.data.status === 1) {
-                response.data.data.forEach(task => {
-                    if (task.id === taskId) {
-                        taskFinished = false;
+    await sleep(3000);
 
-                        console.log(`inside taskFinished: ${taskFinished}`)
-                    }
-                });
-            } else {
-                throw new Error(`Deployment tasks retrieval failed`);
-            }
-        }).catch(error => {
-            console.log(error);
-        });
-    }, 3000);
+    instance.get('UserTasks/retrieve').then(response => {
+        if (response.data.status === 1) {
+            response.data.data.forEach(task => {
+                if (task.id === taskId) {
+                    taskFinished = false;
+
+                    console.log(`inside taskFinished: ${taskFinished}`)
+                }
+            });
+        } else {
+            throw new Error(`Deployment tasks retrieval failed`);
+        }
+    }).catch(error => {
+        console.log(error);
+        throw new Error(error);
+    });
 
     console.log(`outside taskFinished: ${taskFinished}`)
-    
+
     return taskFinished;
+}
+
+function sleep(ms) {
+    return new Promise((resolve) => {
+        setTimeout(resolve, ms);
+    });
 }
 
 main();
