@@ -43,7 +43,7 @@ const main = async () => {
 
                         let taskFinished = false;
 
-                        while (taskFinished) {
+                        while (!taskFinished) {
                             taskFinished = isTaskFinished(instance, taskId);
                             if (taskFinished) {
                                 core.info(`Task ${taskId} status: Completed`);
