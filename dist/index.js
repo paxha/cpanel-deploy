@@ -33337,7 +33337,7 @@ const main = async () => {
 
                         let taskFinished = false;
 
-                        while (!taskFinished) {
+                        while (taskFinished) {
                             taskFinished = isTaskFinished(instance, taskId);
                         }
 
@@ -33376,9 +33376,9 @@ async function isTaskFinished(instance, taskId) {
     await instance.get('UserTasks/retrieve').then(response => {
         if (response.data.status === 1) {
             response.data.data.forEach(task => {
-                console.log(task.id, taskId)
                 if (task.id === taskId) {
-                    taskFinished = false
+                    core.info(`Task ${taskId} status: In-Progress...`);
+                    taskFinished = false;
                 }
             });
         } else {
