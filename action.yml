@@ -1,5 +1,5 @@
-name: "cPanel Deploy"
-description: "Deploy files to cPanel"
+name: "cPanel Deploy using API Token"
+description: "Deploy to cPanel using cPanel API and git"
 inputs:
   host:
     description: "Host of cPanel installation, including protocol. for instance: https://serverxxx.web-hosting.com"
