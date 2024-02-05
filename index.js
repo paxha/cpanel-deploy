@@ -42,6 +42,16 @@ const main = async () => {
 
                     if (response.data.status === 1) {
                         console.info(`Deployment for branch ${branch} created successfully`);
+
+                        const taskId = response.data.data.task_id;
+
+                        let taskFinished = false;
+
+                        while (!taskFinished) {
+                            sleep(1000);
+                            taskFinished = isTaskFinished(instance, taskId);
+                        }
+
                     } else {
                         throw new Error(`Deployment for branch ${branch} failed`);
                     }
@@ -68,5 +78,28 @@ const main = async () => {
         core.setFailed(error.message);
     }
 };
+
+async function isTaskFinished(instance, taskId) {
+    let taskFinished = true;
+    
+    await instance.get('UserTasks/retrieve').then(response => {
+        console.info(`Tasks List: ${JSON.stringify(response.data, null, 2)}`);
+
+        if (response.data.status === 1) {
+            response.data.data.forEach(task => {
+                if (task.id === taskId) {
+                    taskFinished = false
+                }
+            });
+        } else {
+            throw new Error(`Deployment for branch ${branch} failed`);
+        }
+    }).catch(error => {
+        console.log(error);
+    });
+
+    return taskFinished;
+}
+
 
 main();
