@@ -33332,7 +33332,7 @@ const main = async () => {
                 }).then(response => {
                     if (response.data.status === 1) {
                         const taskId = response.data.data.task_id;
-                
+
                         core.info(`Deployment for branch ${branch} created successfully with task id ${taskId}`);
 
                         let taskFinished = false;
@@ -33373,30 +33373,26 @@ const main = async () => {
     }
 };
 
-async function isTaskFinished(instance, taskId) {
-    await delay(1000);
-
+function isTaskFinished(instance, taskId) {
     let taskFinished = true;
 
-    await instance.get('UserTasks/retrieve').then(response => {
-        if (response.data.status === 1) {
-            response.data.data.forEach(task => {
-                if (task.id === taskId) {
-                    taskFinished = false;
-                }
-            });
-        } else {
-            throw new Error(`Deployment task ${taskId} failed to retrieve`);
-        }
-    }).catch(error => {
-        console.log(error);
-    });
-
+    setTimeout(function () {
+        instance.get('UserTasks/retrieve').then(response => {
+            if (response.data.status === 1) {
+                response.data.data.forEach(task => {
+                    if (task.id === taskId) {
+                        taskFinished = false;
+                    }
+                });
+            } else {
+                throw new Error(`Deployment task ${taskId} failed to retrieve`);
+            }
+        }).catch(error => {
+            console.log(error);
+        });
+    }, 3000);
+    
     return taskFinished;
-}
-
-function delay(time) {
-    return new Promise(resolve => setTimeout(resolve, time));
 }
 
 main();
