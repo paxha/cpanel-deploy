@@ -1,8 +1,14 @@
 # cPanel Deploy
 
-Deploy to cPanel through github actions.
+Deploy to cPanel through GitHub Actions.
 
 ## Getting Started
+
+To deploy your code to cPanel using GitHub Actions, follow these steps:
+
+1. Create a workflow file (e.g., `.github/workflows/cpanel-deployment.yml`) in your repository.
+
+2. Add the following content to the workflow file:
 
 ```yml
 name: cPanel Deployment

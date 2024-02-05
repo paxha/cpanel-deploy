@@ -1,0 +1,32 @@
+name: 'cPanel Deploy'
+description: 'Deploy files to cPanel'
+inputs:
+  host:
+    description: 'Host of cPanel installation, including protocol. for instance: https://serverxxx.web-hosting.com'
+    required: true
+  port:
+    description: 'Port of cPanel API. The default value is 2083 - don't change it unless you know what you're doing'
+    required: false
+    default: '2083'
+  username:
+    description: 'Username of cPanel account. Must be the same username used to create the token. e.g: "pasha"'
+    required: true
+  api_token:
+    description: 'API Token of cPanel account. Must be generated from cPanel, used for authorization. You should store this as a repository-secret.'
+    required: true
+  remote_path:
+    description: 'Path to the directory where the repository is installed in the target cPanel account. must already exist. e.g: /home/your_username/repositories/your_repository'
+    required: true
+  branch:
+    description: 'Branch to deploy. e.g: "master" or "main" or "develop" or "feature/your-feature"'
+    required: false
+    default: 'main'
+outputs:
+  duration:
+    description: 'Time it took to deploy, in milliseconds'
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
+branding:
+  icon: 'upload-cloud'
+  color: 'orange'

@@ -1,0 +1,31 @@
+{
+  "name": "cpanel-deploy",
+  "description": "Deploy to cPanel using cPanel API and git",
+  "main": "index.js",
+  "scripts": {
+    "build": "ncc build index.js -o dist",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paxha/cpanel-deploy.git"
+  },
+  "keywords": [
+    "cpanel",
+    "cpanel-deploy",
+    "cpanel-git"
+  ],
+  "author": "Hassan Raza Pasha",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/paxha/cpanel-deploy/issues"
+  },
+  "homepage": "https://github.com/paxha/cpanel-deploy#readme",
+  "devDependencies": {
+    "@vercel/ncc": "^0.38.1"
+  },
+  "dependencies": {
+    "@actions/core": "^1.10.1",
+    "axios": "^1.6.7"
+  }
+}
