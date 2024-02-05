@@ -33307,6 +33307,8 @@ const main = async () => {
 
         const baseUrl = `${host}:${port}/execute/`;
 
+        core.info(`baseUrl: ${baseUrl}`);
+
         const instance = axios.create({
             baseURL: baseUrl,
             timeout: 1000,
