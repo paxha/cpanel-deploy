@@ -33306,7 +33306,7 @@ const main = async () => {
         const apiToken = core.getInput('api_token', { required: true });
         const remotePath = core.getInput('remote_path', { required: true });
         const branch = core.getInput('branch', { required: false });
-        const deploy = core.getInput('deploy', { required: false });
+        const deploy = core.getBooleanInput('deploy', { required: false });
 
         const baseUrl = `${host}:${port}/execute/`;
 
