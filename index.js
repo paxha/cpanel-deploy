@@ -12,6 +12,7 @@ const main = async () => {
         const apiToken = core.getInput('api_token', { required: true });
         const remotePath = core.getInput('remote_path', { required: true });
         const branch = core.getInput('branch', { required: false });
+        const deploy = core.getInput('deploy', { required: true });
 
         const baseUrl = `${host}:${port}/execute/`;
 
@@ -31,34 +32,35 @@ const main = async () => {
             if (response.data.status === 1) {
                 core.info(`Branch ${branch} updated successfully`);
 
-                instance.get('VersionControlDeployment/create', {
-                    params: {
-                        repository_root: remotePath,
-                    }
-                }).then(async (response) => {
-                    if (response.data.status === 1) {
-                        const taskId = response.data.data.task_id;
-
-                        core.info(`Deployment for branch ${branch} created successfully with task id ${taskId}`);
-
-                        let taskFinished = false;
-
-                        while (!taskFinished) {
-                            taskFinished = await isTaskFinished(instance, taskId);
-                            if (taskFinished) {
-                                core.info(`Deployment for branch ${branch} finished successfully`);
-                            } else {
-                                core.info(`Deployment for branch ${branch} is still in progress`);
-                            }
+                if (deploy) {
+                    instance.get('VersionControlDeployment/create', {
+                        params: {
+                            repository_root: remotePath,
                         }
-                    } else {
-                        throw new Error(`Deployment for branch ${branch} failed`);
-                    }
-                }).catch(error => {
-                    console.error(error);
-                    throw new Error(error);
-                })
+                    }).then(async (response) => {
+                        if (response.data.status === 1) {
+                            const taskId = response.data.data.task_id;
 
+                            core.info(`Deployment for branch ${branch} created successfully with task id ${taskId}`);
+
+                            let taskFinished = false;
+
+                            while (!taskFinished) {
+                                taskFinished = await isTaskFinished(instance, taskId);
+                                if (taskFinished) {
+                                    core.info(`Deployment for branch ${branch} finished successfully`);
+                                } else {
+                                    core.info(`Deployment for branch ${branch} is still in progress`);
+                                }
+                            }
+                        } else {
+                            throw new Error(`Deployment for branch ${branch} failed`);
+                        }
+                    }).catch(error => {
+                        console.error(error);
+                        throw new Error(error);
+                    })
+                }
             } else {
                 throw new Error(`Branch ${branch} update failed`);
             }

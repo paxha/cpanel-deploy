@@ -21,6 +21,9 @@ inputs:
     description: "Branch to deploy. e.g: 'master' or 'main' or 'develop' or 'feature/your-feature'"
     required: false
     default: "main"
+  deploy:
+    description: "Run the .cpanel.yml deploy or not"
+    default: true
 outputs:
   duration:
     description: "Time it took to deploy, in milliseconds"
