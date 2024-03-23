@@ -33306,7 +33306,7 @@ const main = async () => {
         const apiToken = core.getInput('api_token', { required: true });
         const remotePath = core.getInput('remote_path', { required: true });
         const branch = core.getInput('branch', { required: false });
-        const deploy = core.getInput('deploy', { required: true });
+        const deploy = core.getInput('deploy', { required: false });
 
         const baseUrl = `${host}:${port}/execute/`;
 
@@ -33326,7 +33326,9 @@ const main = async () => {
             if (response.data.status === 1) {
                 core.info(`Branch ${branch} updated successfully`);
 
-                if (deploy) {
+                core.info(`deploy: ${deploy}`)
+
+                if (!!deploy) {
                     instance.get('VersionControlDeployment/create', {
                         params: {
                             repository_root: remotePath,
